@@ -21,8 +21,6 @@
 }
 
 // Report mode: sections
-#let legacy-section-header = false
-
 #let section-begin(title, ..args) = [#heading(title, ..args) <section-begin>]
 #let section-end(meta: "") = [#metadata(meta) <section-end>]
 
@@ -57,21 +55,13 @@
             }
           } else if mode == "report" {
             // Display current section
-            if legacy-section-header {
-              let elems = query(heading.where(level: 1).before(here()))
-              if elems.len() > 0 {
-                let body = elems.last().body
-                [| *#body*]
-              }
-            } else {
-              let marker = query(selector(<section-end>).after(here()))
-              if marker.len() > 0 {
-                let marker-loc = marker.first().location()
-                let section-elems = query(selector(<section-begin>).before(marker-loc))
-                if section-elems.len() > 0 {
-                  let section-title = section-elems.last().body
-                  [| *#section-title*]
-                }
+            let marker = query(selector(<section-end>).after(here()))
+            if marker.len() > 0 {
+              let marker-loc = marker.first().location()
+              let section-elems = query(selector(<section-begin>).before(marker-loc))
+              if section-elems.len() > 0 {
+                let section-title = section-elems.last().body
+                [| *#section-title*]
               }
             }
           }
