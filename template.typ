@@ -35,12 +35,18 @@
   author: "Author",
   course-name: "Course Name",
   mode: "assignment",
+  header: auto,
+  footer: auto,
   body,
 ) = {
+  let wrap-default = (value, default) => {
+    if value == auto { default } else { value }
+  }
+
   set document(title: title, author: author)
   set page(
     paper: "a4",
-    header: context {
+    header: wrap-default(header, context {
       let (page-number,) = counter(page).get()
       if page-number > 1 {
         align(right, text(size: 10pt)[
@@ -67,8 +73,8 @@
           }
         ])
       }
-    },
-    footer: context {
+    }),
+    footer: wrap-default(footer, context {
       let (page-number,) = counter(page).get()
       let (total-pages,) = counter(page).final()
       align(center, text(size: 10pt,
@@ -78,7 +84,7 @@
           Page #page-number of #total-pages
         ]
       ))
-    },
+    }),
   )
 
   // Font settings
