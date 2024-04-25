@@ -98,16 +98,21 @@
     }
   }) if mode == "report"
 
-  set par(justify: true, first-line-indent: 2em)
-  // Workaround for first paragraph indent in CJK context
-  show heading: it => {
-    it
-    v(10pt, weak: true)
-    box()
-    v(5pt, weak: true)
+  context {
+    let indent = if text.lang == "zh" { 2em } else { 1em }
+    set par(justify: true, first-line-indent: indent)
+    // Workaround for first paragraph indent in CJK context
+    show heading: it => {
+      it
+      if text.lang == "zh" {
+        v(10pt, weak: true)
+        box()
+        v(5pt, weak: true)
+      }
+    }
+
+    align(center, text(18pt)[#title])
+
+    body
   }
-
-  align(center, text(18pt)[#title])
-
-  body
 }
