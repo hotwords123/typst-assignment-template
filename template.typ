@@ -1,34 +1,31 @@
 // Asssignment mode: problems
-#let problem-counter = counter("problem")
+#let problem-numbering = (_, ..n) => [Problem #numbering("1", ..n)]
 
-#let problem-begin() = {
-  problem-counter.step()
-  [== Problem #problem-counter.display() <problem-begin>]
-}
-#let problem-body = block.with(
+#let problem-container = block.with(
   fill: rgb(245, 255, 245),
   width: 100%,
   inset: 8pt,
   radius: 4pt,
   stroke: rgb(128, 199, 128),
 )
-#let problem-end(meta: "") = [#metadata(meta) <problem-end>]
 
-#let problem(meta: "", body) = {
-  problem-begin()
-  problem-body(body)
-  problem-end(meta: meta)
-}
+#let problem(
+  numbering: problem-numbering,
+  container: problem-container,
+  title: none,
+  body,
+) = [
+  #heading(level: 2, numbering: numbering, title) <problem-begin>
+  #container(body)
+  #metadata((numbering: numbering, title: title)) <problem-end>
+]
 
 // Report mode: sections
-#let section-begin(title, ..args) = [#heading(title, ..args) <section-begin>]
-#let section-end(meta: "") = [#metadata(meta) <section-end>]
-
-#let section(meta: "", title, body, ..args) = {
-  section-begin(title, ..args)
-  body
-  section-end(meta: meta)
-}
+#let section(title, body, ..args) = [
+  #heading(title, ..args) <section-begin>
+  #body
+  #metadata((title: title)) <section-end>
+]
 
 #let assignment-class(
   title: "Title",
@@ -56,19 +53,20 @@
             let marker = query(selector(<problem-end>).after(here()))
             if marker.len() > 0 {
               let marker-loc = marker.first().location()
-              let (problem-number,) = problem-counter.at(marker-loc)
-              [| *Problem #problem-number*]
+              let meta = marker.first().value
+              let problem-title = if meta.title != none {
+                meta.title
+              } else {
+                numbering(meta.numbering, ..counter(heading).at(marker-loc))
+              }
+              [| *#problem-title*]
             }
           } else if mode == "report" {
             // Display current section
             let marker = query(selector(<section-end>).after(here()))
             if marker.len() > 0 {
-              let marker-loc = marker.first().location()
-              let section-elems = query(selector(<section-begin>).before(marker-loc))
-              if section-elems.len() > 0 {
-                let section-title = section-elems.last().body
-                [| *#section-title*]
-              }
+              let meta = marker.first().value
+              [| *#meta.title*]
             }
           }
         ])
