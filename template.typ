@@ -105,6 +105,9 @@
   context {
     let indent = if text.lang == "zh" { 2em } else { 1em }
     set par(justify: true, first-line-indent: indent)
+    set enum(indent: indent)
+    set list(indent: indent)
+    set terms(indent: indent, hanging-indent: -indent)
     // Workaround for first paragraph indent in CJK context
     show heading: it => {
       it
