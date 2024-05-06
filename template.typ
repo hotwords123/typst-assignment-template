@@ -1,3 +1,12 @@
+#let wrap-default(value, default) = if value == auto { default } else { value }
+
+#let fake-par(leading: auto) = context {
+  v(wrap-default(leading, par.leading), weak: true)
+  box()
+  v(0pt, weak: true)
+}
+#let indent = context h(par.first-line-indent)
+
 // Asssignment mode: problems
 #let problem-numbering = (_, ..n) => [Problem #numbering("1", ..n)]
 
@@ -36,10 +45,6 @@
   footer: auto,
   body,
 ) = {
-  let wrap-default = (value, default) => {
-    if value == auto { default } else { value }
-  }
-
   set document(title: title, author: author)
   set page(
     paper: "a4",
@@ -112,9 +117,7 @@
     show heading: it => {
       it
       if text.lang == "zh" {
-        v(10pt, weak: true)
-        box()
-        v(5pt, weak: true)
+        fake-par(leading: 15pt)
       }
     }
 
