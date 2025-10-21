@@ -32,6 +32,20 @@
   #after
 ]
 
+#let statement-container = block.with(
+  fill: rgb(250, 250, 250),
+  width: 100%,
+  inset: 8pt,
+  radius: 4pt,
+  stroke: rgb(160, 160, 160),
+)
+
+#let solution(statement, body, ..args) = problem(
+  before: statement-container(statement + parbreak()),
+  body,
+  ..args,
+)
+
 // Report mode: sections
 #let section(title, body, ..args) = [
   #heading(title, ..args) <section-begin>
