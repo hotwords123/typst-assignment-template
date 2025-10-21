@@ -1,13 +1,9 @@
 #let wrap-default(value, default) = if value == auto { default } else { value }
 
-#let fake-par(leading: auto) = context {
-  v(wrap-default(leading, par.leading), weak: true)
-  box()
-  v(0pt, weak: true)
-}
-#let indent = context h(par.first-line-indent)
+#let indent = context h(par.first-line-indent.amount)
+#let no-indent = context h(par.first-line-indent.amount * -1)
 
-// Asssignment mode: problems
+// Assignment mode: problems
 #let problem-numbering = (_, ..n) => [Problem #numbering("1", ..n)]
 
 #let problem-container = block.with(
@@ -22,11 +18,18 @@
   numbering: problem-numbering,
   container: problem-container,
   title: none,
+  before: none,
+  after: none,
   body,
 ) = [
   #heading(level: 2, numbering: numbering, title) <problem-begin>
-  #container(body)
-  #metadata((numbering: numbering, title: title)) <problem-end>
+  #before
+  #container[
+    #body
+    #metadata((numbering: numbering, title: title)) <problem-end>
+    #parbreak()  // Ensure the body is wrapped in paragraphs
+  ]
+  #after
 ]
 
 // Report mode: sections
@@ -80,13 +83,11 @@
     footer: wrap-default(footer, context {
       let (page-number,) = counter(page).get()
       let (total-pages,) = counter(page).final()
-      align(center, text(size: 10pt,
-        if text.lang == "zh" [
-          第 #page-number 页，共 #total-pages 页
-        ] else [
-          Page #page-number of #total-pages
-        ]
-      ))
+      align(center, text(size: 10pt, if text.lang == "zh" [
+        第 #page-number 页，共 #total-pages 页
+      ] else [
+        Page #page-number of #total-pages
+      ]))
     }),
   )
 
@@ -109,18 +110,14 @@
 
   context {
     let indent = if text.lang == "zh" { 2em } else { 1em }
-    let list-indent = 1em
-    set par(justify: true, first-line-indent: indent)
-    set enum(indent: list-indent)
-    set list(indent: list-indent)
+    set par(first-line-indent: (amount: indent, all: true))
+
+    // let list-indent = 1em
+    // set enum(indent: list-indent)
+    // set list(indent: list-indent)
+    // show enum: set par(first-line-indent: 0em)
+
     set terms(indent: indent, hanging-indent: -indent)
-    // Workaround for first paragraph indent in CJK context
-    show heading: it => {
-      it
-      if text.lang == "zh" {
-        fake-par(leading: 15pt)
-      }
-    }
 
     align(center, text(18pt)[#title])
 
