@@ -19,15 +19,15 @@
   container: problem-container,
   title: none,
   before: none,
-  after: none,
   body,
 ) = [
   #heading(level: 2, numbering: numbering, title) <problem-begin>
   #before
-  #container(body + parbreak())  // Ensure the body is wrapped in paragraphs
-  #after
-  #metadata((numbering: numbering, title: title)) <problem-end>
-  #h(0pt)  // Ensure the metadata is not split from the body on page breaks
+  #container[
+    #body
+    #metadata((numbering: numbering, title: title)) <problem-end>
+    #parbreak()  // Ensure the body is wrapped in paragraphs
+  ]
 ]
 
 #let statement-container = block.with(
@@ -47,9 +47,11 @@
 // Report mode: sections
 #let section(title, body, ..args) = [
   #heading(title, ..args) <section-begin>
-  #body
-  #metadata((title: title)) <section-end>
-  #h(0pt)  // Ensure the metadata is not split from the body on page breaks
+  #block[
+    #body
+    #metadata((title: title)) <section-end>
+    #parbreak()  // Ensure the body is wrapped in paragraphs
+  ]
 ]
 
 #let assignment-class(

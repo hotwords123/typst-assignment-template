@@ -1,4 +1,4 @@
-#import "@local/assignment-template:0.1.0": *
+#import "/src/lib.typ": *
 
 #set text(lang: "en")
 
