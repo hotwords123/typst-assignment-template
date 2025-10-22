@@ -24,12 +24,10 @@
 ) = [
   #heading(level: 2, numbering: numbering, title) <problem-begin>
   #before
-  #container[
-    #body
-    #metadata((numbering: numbering, title: title)) <problem-end>
-    #parbreak()  // Ensure the body is wrapped in paragraphs
-  ]
+  #container(body + parbreak())  // Ensure the body is wrapped in paragraphs
   #after
+  #metadata((numbering: numbering, title: title)) <problem-end>
+  #h(0pt)  // Ensure the metadata is not split from the body on page breaks
 ]
 
 #let statement-container = block.with(
@@ -51,6 +49,7 @@
   #heading(title, ..args) <section-begin>
   #body
   #metadata((title: title)) <section-end>
+  #h(0pt)  // Ensure the metadata is not split from the body on page breaks
 ]
 
 #let assignment-class(
