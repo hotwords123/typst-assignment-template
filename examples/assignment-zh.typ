@@ -1,4 +1,4 @@
-#import "../template.typ": *
+#import "@local/assignment-template:0.1.0": *
 #import "@preview/itemize:0.1.2" as el
 
 #set text(lang: "zh")

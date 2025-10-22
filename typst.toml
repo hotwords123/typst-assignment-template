@@ -1,0 +1,9 @@
+[package]
+name = "assignment-template"
+version = "0.1.0"
+entrypoint = "src/lib.typ"
+authors = ["hotwords123"]
+license = "MIT"
+description = "A simple assignment template for Typst."
+repository = "https://github.com/hotwords123/typst-assignment-template"
+compiler = "0.13.0"
