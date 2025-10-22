@@ -115,22 +115,21 @@
   set heading(numbering: (..nums) => {
     let (first, ..more) = nums.pos()
     if more.len() == 0 {
-      return numbering("一 ", first)
+      return numbering(if text.lang == "zh" { "一 " } else { "I " }, first)
     } else {
       return numbering("1.", ..more)
     }
   }) if mode == "report"
 
   context {
-    let indent = if text.lang == "zh" { 2em } else { 1em }
-    set par(first-line-indent: (amount: indent, all: true))
+    let first-line-indent = if text.lang == "zh" {
+      (amount: 2em, all: true)
+    } else {
+      (amount: 1em, all: false)
+    }
+    set par(first-line-indent: first-line-indent)
 
-    // let list-indent = 1em
-    // set enum(indent: list-indent)
-    // set list(indent: list-indent)
-    // show enum: set par(first-line-indent: 0em)
-
-    set terms(indent: indent, hanging-indent: -indent)
+    set terms(indent: 2em, hanging-indent: -2em) if text.lang == "zh"
 
     align(center, text(18pt)[#title])
 
