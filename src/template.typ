@@ -47,7 +47,7 @@
 // Report mode: sections
 #let section(title, body, ..args) = [
   #heading(title, ..args) <section-begin>
-  #block[
+  #block(width: 100%)[
     #body
     #metadata((title: title)) <section-end>
     #parbreak()  // Ensure the body is wrapped in paragraphs
@@ -132,6 +132,8 @@
     set par(first-line-indent: first-line-indent)
 
     set terms(indent: 2em, hanging-indent: -2em) if text.lang == "zh"
+
+    show heading: set block(below: 1em) if mode == "report" and text.lang == "zh"
 
     align(center, text(18pt)[#title])
 
