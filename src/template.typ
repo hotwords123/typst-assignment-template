@@ -1,7 +1,8 @@
 #let wrap-default(value, default) = if value == auto { default } else { value }
 
 #let indent = context h(par.first-line-indent.amount)
-#let no-indent = context h(par.first-line-indent.amount * -1)
+#let no-indent = context h(-par.first-line-indent.amount)
+#let cont = context v(par.leading - par.spacing) + no-indent
 
 // Assignment mode: problems
 #let problem-numbering = (_, ..n) => [Problem #numbering("1", ..n)]
