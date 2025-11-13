@@ -2,7 +2,7 @@
 
 #let indent = context h(par.first-line-indent.amount)
 #let no-indent = context h(-par.first-line-indent.amount)
-#let cont = context v(par.leading - par.spacing) + no-indent
+#let cont = context v(par.leading, weak: true) + no-indent
 
 // Assignment mode: problems
 #let problem-numbering = (_, ..n) => [Problem #numbering("1", ..n)]
