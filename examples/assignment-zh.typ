@@ -1,16 +1,15 @@
 #import "/src/lib.typ": *
-#import "@preview/itemize:0.1.2" as el
+#import "@preview/itemize:0.2.0" as el
 
 #set text(lang: "zh")
 
 #show: assignment-class.with(
-  title: [*作业标题*],
+  title: [作业标题],
   author: "作者姓名",
   course-name: "课程名称",
 )
 
 #show: el.default-enum-list
-#show enum: block
 
 #problem(title: [一个简单的练习])[
   这是一个简单的练习，用来演示作业模板。

@@ -3,7 +3,7 @@
 #set text(lang: "en")
 
 #show: assignment-class.with(
-  title: [*Homework Title*],
+  title: [Homework Title],
   author: "Author Name",
   course-name: "Course Name",
 )

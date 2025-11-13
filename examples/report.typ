@@ -3,7 +3,7 @@
 #set text(lang: "en")
 
 #show: assignment-class.with(
-  title: [*Report Title*],
+  title: [Report Title],
   author: "Author Name",
   course-name: "Course Name",
   mode: "report",
@@ -36,11 +36,22 @@
   === Qualitative Analysis
   Qualitative data was examined through thematic analysis and content analysis to extract significant themes and insights.
 
-  === Tools Used
+  === Collection and Analysis Methods
   The following tools were utilized during the data analysis phase:
   - Python with libraries such as Pandas and NumPy
   - R for statistical computing
   - NVivo for qualitative data analysis
+
+  The data collection process was divided into several stages to ensure systematic and organized efforts. These stages included:
+  + *Planning Stage*: Defining research objectives and designing data collection methods.
+  + *Implementation Stage*: Conducting the actual data collection activities.
+  + *Review Stage*: Examining and validating the collected data to ensure its integrity.
+  Each of the above stages was carefully planned to ensure the quality and relevance of the data.
+
+  The data collection process aimed to meet several objectives, including:
+  / Accuracy: Ensuring that the collected data accurately reflects the subject of study.
+  / Reliability: Ensuring consistency of the data through standardized data collection methods.
+  / Validity: Ensuring that the data supports the verification of research hypotheses and the drawing of conclusions.
 
   == Ethical Considerations
   Ethical considerations were taken into account throughout the research process to ensure the integrity and confidentiality of the data.

@@ -1,12 +1,11 @@
-#let wrap-default(value, default) = if value == auto { default } else { value }
+#let _wrap-default(value, default) = if value == auto { default } else { value }
+#let _join-nonempty(sep: [, ], ..items) = items.pos().filter(item => item != none).join(sep)
 
-#let indent = context h(par.first-line-indent.amount)
-#let no-indent = context h(-par.first-line-indent.amount)
+#let indent = context h(par.first-line-indent.amount, weak: true)
+#let no-indent = context h(-par.first-line-indent.amount, weak: true)
 #let cont = context v(par.leading, weak: true) + no-indent
 
 // Assignment mode: problems
-#let problem-numbering = (_, ..n) => [Problem #numbering("1", ..n)]
-
 #let problem-container = block.with(
   fill: rgb(245, 255, 245),
   width: 100%,
@@ -16,17 +15,16 @@
 )
 
 #let problem(
-  numbering: problem-numbering,
   container: problem-container,
   title: none,
   before: none,
   body,
-) = [
-  #heading(level: 2, numbering: numbering, title) <problem-begin>
+) = context [
+  #heading(title) <problem-begin>
   #before
   #container[
     #body
-    #metadata((numbering: numbering, title: title)) <problem-end>
+    #metadata((numbering: heading.numbering, title: title)) <problem-end>
     #parbreak()  // Ensure the body is wrapped in paragraphs
   ]
 ]
@@ -56,9 +54,9 @@
 ]
 
 #let assignment-class(
-  title: "Title",
-  author: "Author",
-  course-name: "Course Name",
+  title: none,
+  author: (),
+  course-name: none,
   mode: "assignment",
   header: auto,
   footer: auto,
@@ -67,77 +65,118 @@
   set document(title: title, author: author)
   set page(
     paper: "a4",
-    header: wrap-default(header, context {
+    header: _wrap-default(header, context {
       let (page-number,) = counter(page).get()
       if page-number > 1 {
-        align(right, text(size: 10pt)[
-          *#course-name: #title*
-          #if mode == "assignment" {
-            // Display current problem
-            let marker = query(selector(<problem-end>).after(here()))
-            if marker.len() > 0 {
-              let marker-loc = marker.first().location()
-              let meta = marker.first().value
-              let problem-title = if meta.title != none {
-                meta.title
-              } else {
-                numbering(meta.numbering, ..counter(heading).at(marker-loc))
-              }
-              [| *#problem-title*]
-            }
-          } else if mode == "report" {
-            // Display current section
-            let marker = query(selector(<section-end>).after(here()))
-            if marker.len() > 0 {
-              let meta = marker.first().value
-              [| *#meta.title*]
+        set align(right)
+        set text(size: 10pt)
+        show: strong
+
+        let first = _join-nonempty(sep: [: ], course-name, title)
+        let second = if mode == "assignment" {
+          // Display current problem
+          let marker = query(selector(<problem-end>).after(here()))
+          if marker.len() > 0 {
+            let marker-loc = marker.first().location()
+            let meta = marker.first().value
+            if meta.title != none {
+              meta.title
+            } else if meta.numbering != none {
+              numbering(meta.numbering, ..counter(heading).at(marker-loc))
             }
           }
-        ])
+        } else if mode == "report" {
+          // Display current section
+          let marker = query(selector(<section-end>).after(here()))
+          if marker.len() > 0 {
+            let meta = marker.first().value
+            meta.title
+          }
+        }
+
+        _join-nonempty(sep: [ | ], first, second)
       }
     }),
-    footer: wrap-default(footer, context {
+    footer: _wrap-default(footer, context {
       let (page-number,) = counter(page).get()
       let (total-pages,) = counter(page).final()
-      align(center, text(size: 10pt, if text.lang == "zh" [
+
+      set align(center)
+      set text(size: 10pt)
+
+      if text.lang == "zh" [
         第 #page-number 页，共 #total-pages 页
       ] else [
         Page #page-number of #total-pages
-      ]))
+      ]
     }),
   )
 
-  // Font settings
-  let en-font = "New Computer Modern"
-  set text(size: 11pt, font: (en-font, "FZShuSong-Z01S"))
-  show strong: set text(font: (en-font, "FZHei-B01S"))
-  show emph: set text(font: (en-font, "FZKai-Z03S"))
-  show heading: set text(font: (en-font, "FZXiaoBiaoSong-B05S"))
+  // Title
+  show std.title: set align(center)
+  show std.title: set text(size: 18pt)
 
-  // Headings
-  set heading(numbering: (..nums) => {
-    let (first, ..more) = nums.pos()
-    if more.len() == 0 {
-      return numbering(if text.lang == "zh" { "一 " } else { "I " }, first)
-    } else {
-      return numbering("1.", ..more)
-    }
-  }) if mode == "report"
+  show: it => if mode == "report" {
+    // Headings
+    show heading: set block(below: 1em)
+    set heading(numbering: (..nums) => {
+      numbering("1.1", ..nums)
+      h(0.8em, weak: true)
+    })
 
-  context {
-    let first-line-indent = if text.lang == "zh" {
-      (amount: 2em, all: true)
-    } else {
-      (amount: 1em, all: false)
-    }
-    set par(first-line-indent: first-line-indent)
+    it
+  } else {
+    // Headings
+    set heading(numbering: (..nums) => context {
+      if nums.pos().len() == 1 {
+        let index = numbering("1", ..nums)
+        if text.lang == "zh" [
+          第 #index 题
+        ] else [
+          Problem #index
+        ]
+      } else {
+        numbering("1.1", ..nums)
+      }
+    })
 
-    set terms(indent: 2em, hanging-indent: -2em) if text.lang == "zh"
+    // Reduce font size for problem titles
+    show heading.where(level: 1): set text(size: 0.9em)
 
-    show heading: set block(below: 1em) if mode == "report" and text.lang == "zh"
-
-    align(center, text(18pt)[#title])
-
-    body
+    it
   }
+
+  let en-font = "New Computer Modern"
+
+  show: it => context if text.lang == "zh" {
+    // Font settings
+    set text(size: 11pt, font: (en-font, "FZShuSong-Z01S"))
+    show strong: set text(font: (en-font, "FZHei-B01S"))
+    show emph: set text(font: (en-font, "FZKai-Z03S"))
+    show heading: set text(font: (en-font, "FZXiaoBiaoSong-B05S"))
+    show std.title: set text(font: (en-font, "FZHei-B01S"))
+
+    // Paragraph and list indentation for Chinese documents
+    set par(
+      first-line-indent: (amount: 2em, all: true),
+      spacing: 0.8em,
+      leading: 0.8em,
+    )
+    set list(indent: 2em)
+    set enum(indent: 2em)
+    set terms(indent: 2em, hanging-indent: -2em)
+
+    it
+  } else {
+    // Font settings
+    set text(size: 11pt, font: en-font)
+
+    it
+  }
+
+  if title != none {
+    std.title()
+  }
+
+  body
 }
