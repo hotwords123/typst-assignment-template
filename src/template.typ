@@ -1,10 +1,6 @@
 #let _wrap-default(value, default) = if value == auto { default } else { value }
 #let _join-nonempty(sep: [, ], ..items) = items.pos().filter(item => item != none).join(sep)
 
-#let indent = context h(par.first-line-indent.amount, weak: true)
-#let no-indent = context h(-par.first-line-indent.amount, weak: true)
-#let cont = context v(par.leading, weak: true) + no-indent
-
 // Assignment mode: problems
 #let problem-container = block.with(
   fill: rgb(245, 255, 245),
