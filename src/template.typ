@@ -47,7 +47,7 @@
 // Report mode: sections
 #let section(title, body, ..args) = [
   #heading(title, ..args) <section-begin>
-  #block[
+  #block(width: 100%)[
     #body
     #metadata((title: title)) <section-end>
     #parbreak()  // Ensure the body is wrapped in paragraphs
