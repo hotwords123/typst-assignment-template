@@ -133,6 +133,8 @@
 
     set terms(indent: 2em, hanging-indent: -2em) if text.lang == "zh"
 
+    show heading: set block(below: 1em) if mode == "report" and text.lang == "zh"
+
     align(center, text(18pt)[#title])
 
     body
