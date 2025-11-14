@@ -1,4 +1,5 @@
 #import "/src/lib.typ": *
+#import util: no-indent, cont
 
 #set text(lang: "en")
 
@@ -46,12 +47,19 @@
   + *Planning Stage*: Defining research objectives and designing data collection methods.
   + *Implementation Stage*: Conducting the actual data collection activities.
   + *Review Stage*: Examining and validating the collected data to ensure its integrity.
-  Each of the above stages was carefully planned to ensure the quality and relevance of the data.
+  #cont Each of the above stages was carefully planned to ensure the quality and relevance of the data.
 
   The data collection process aimed to meet several objectives, including:
   / Accuracy: Ensuring that the collected data accurately reflects the subject of study.
   / Reliability: Ensuring consistency of the data through standardized data collection methods.
   / Validity: Ensuring that the data supports the verification of research hypotheses and the drawing of conclusions.
+  #cont This was achieved through rigorous design and execution of the data collection plan.
+
+  Various methods were employed during the data collection and analysis process, including both quantitative and qualitative techniques. Quantitative methods involved statistical analysis and mathematical modeling, while qualitative methods focused on content analysis and thematic identification. Below is a simple example of a mathematical model:
+  $
+    Y = beta_0 + beta_1 X_1 + beta_2 X_2 + ... + beta_n X_n + epsilon, quad beta_i in RR, thick epsilon ~ N(0, sigma^2).
+  $
+  #no-indent This model is used to describe the relationship between the dependent variable $Y$ and multiple independent variables $X_i$, where $beta_i$ represents the regression coefficients and $epsilon$ denotes the error term.
 
   == Ethical Considerations
   Ethical considerations were taken into account throughout the research process to ensure the integrity and confidentiality of the data.

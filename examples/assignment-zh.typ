@@ -1,4 +1,5 @@
 #import "/src/lib.typ": *
+#import util: no-indent
 #import "@preview/itemize:0.2.0" as el
 
 #set text(lang: "zh")
@@ -47,11 +48,11 @@
   $
     c^2 = 3^2 + 4^2 = 9 + 16 = 25.
   $
-  两边同时开平方得：
+  #no-indent 两边同时开平方得：
   $
     c = sqrt(25) = 5.
   $
-  因此，斜边的长度为 $5$。
+  #no-indent 因此，斜边的长度为 $5$。
 ]
 
 #solution(title: [使用 Lorem Ipsum])[
