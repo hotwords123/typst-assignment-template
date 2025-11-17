@@ -1,5 +1,5 @@
 #import "/src/lib.typ": *
-#import util: no-indent
+#import util: cont-eq
 #import "@preview/itemize:0.2.0" as el
 
 #set text(lang: "zh")
@@ -42,17 +42,17 @@
   $
     c^2 = a^2 + b^2,
   $
-  #no-indent 其中 $c$ 为斜边长度，$a$ 和 $b$ 为另外两条直角边的长度。
+  #cont-eq 其中 $c$ 为斜边长度，$a$ 和 $b$ 为另外两条直角边的长度。
 
   在本例中，两条直角边的长度分别为 3 和 4。代入公式得：
   $
     c^2 = 3^2 + 4^2 = 9 + 16 = 25.
   $
-  #no-indent 两边同时开平方得：
+  #cont-eq 两边同时开平方得：
   $
     c = sqrt(25) = 5.
   $
-  #no-indent 因此，斜边的长度为 $5$。
+  #cont-eq 因此，斜边的长度为 $5$。
 ]
 
 #solution(title: [使用 Lorem Ipsum])[

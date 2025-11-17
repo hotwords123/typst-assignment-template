@@ -1,5 +1,5 @@
 #import "/src/lib.typ": *
-#import util: no-indent
+#import util: cont-eq
 
 #set text(lang: "en")
 
@@ -39,17 +39,17 @@
   $
     c^2 = a^2 + b^2,
   $
-  #no-indent where $c$ is the length of the hypotenuse, and $a$ and $b$ are the lengths of the other two sides.
+  #cont-eq where $c$ is the length of the hypotenuse, and $a$ and $b$ are the lengths of the other two sides.
 
   In our case, the lengths of the legs are 3 and 4. We can substitute these values into the formula:
   $
     c^2 = 3^2 + 4^2 = 9 + 16 = 25.
   $
-  #no-indent Taking the square root of both sides, we find:
+  #cont-eq Taking the square root of both sides, we find:
   $
     c = sqrt(25) = 5.
   $
-  #no-indent Therefore, the length of the hypotenuse is $5$.
+  #cont-eq Therefore, the length of the hypotenuse is $5$.
 ]
 
 #solution(title: [Using Lorem Ipsum])[
