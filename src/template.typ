@@ -17,7 +17,7 @@
   title: none,
   before: none,
   body,
-) = context {
+) = {
   heading(title)
   before
   container(body + parbreak()) // Ensure the body is wrapped in paragraphs
