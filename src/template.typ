@@ -1,3 +1,5 @@
+#import "@preview/hydra:0.6.2": hydra, selectors
+
 #let _wrap-default(value, default) = if value == auto { default } else { value }
 #let _join-nonempty(sep: [, ], ..items) = items.pos().filter(item => item != none).join(sep)
 
@@ -15,15 +17,11 @@
   title: none,
   before: none,
   body,
-) = context [
-  #heading(title) <problem-begin>
-  #before
-  #container[
-    #body
-    #metadata((numbering: heading.numbering, title: title)) <problem-end>
-    #parbreak()  // Ensure the body is wrapped in paragraphs
-  ]
-]
+) = context {
+  heading(title)
+  before
+  container(body + parbreak()) // Ensure the body is wrapped in paragraphs
+}
 
 #let statement-container = block.with(
   fill: rgb(250, 250, 250),
@@ -38,16 +36,6 @@
   body,
   ..args,
 )
-
-// Report mode: sections
-#let section(title, body, ..args) = [
-  #heading(title, ..args) <section-begin>
-  #block(width: 100%)[
-    #body
-    #metadata((title: title)) <section-end>
-    #parbreak()  // Ensure the body is wrapped in paragraphs
-  ]
-]
 
 #let assignment-class(
   title: none,
@@ -68,27 +56,16 @@
         set text(size: 10pt)
         show: strong
 
+        // Remove extra space after heading numbering in header
+        show <heading-numbering-space>: none
+
         let first = _join-nonempty(sep: [: ], course-name, title)
-        let second = if mode == "assignment" {
-          // Display current problem
-          let marker = query(selector(<problem-end>).after(here()))
-          if marker.len() > 0 {
-            let marker-loc = marker.first().location()
-            let meta = marker.first().value
-            if meta.title != none {
-              meta.title
-            } else if meta.numbering != none {
-              numbering(meta.numbering, ..counter(heading).at(marker-loc))
-            }
-          }
-        } else if mode == "report" {
-          // Display current section
-          let marker = query(selector(<section-end>).after(here()))
-          if marker.len() > 0 {
-            let meta = marker.first().value
-            meta.title
-          }
-        }
+        let second = hydra(
+          // For some reason, `selectors.by-level(max: 2)` doesn't work properly here,
+          // so we use a custom selector instead.
+          selectors.custom(selector.or(heading.where(level: 1), heading.where(level: 2))),
+          skip-starting: true,
+        )
 
         _join-nonempty(sep: [ | ], first, second)
       }
@@ -117,7 +94,7 @@
     show heading: set block(below: 1em)
     set heading(numbering: (..nums) => {
       numbering("1.1", ..nums)
-      h(0.8em, weak: true)
+      [#h(0.8em, weak: true) <heading-numbering-space>]
     })
 
     it
