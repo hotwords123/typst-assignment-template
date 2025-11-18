@@ -12,6 +12,12 @@
   stroke: rgb(128, 199, 128),
 )
 
+#let question-counter = counter("assignment-template:question")
+
+#let reset-question = {
+  question-counter.update(0)
+}
+
 #let problem(
   container: problem-container,
   title: none,
@@ -19,9 +25,23 @@
   body,
 ) = {
   heading(title)
+  reset-question
   before
+  reset-question
   container(body + parbreak()) // Ensure the body is wrapped in paragraphs
 }
+
+#let question(
+  numbering: "1.",
+  body-indent: 0.5em,
+) = {
+  question-counter.step()
+  context question-counter.display(numbering)
+  h(body-indent, weak: true)
+}
+
+// Shorthand for question, can be overridden if needed
+#let qn = question()
 
 #let statement-container = block.with(
   fill: rgb(250, 250, 250),

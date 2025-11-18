@@ -25,9 +25,9 @@
 
   Hint: Try to factor the left-hand side.
 ][
-  1. The equation $x^2 + 2x + 1 = 0$ can be factored as $(x + 1)(x + 1) = 0$. Therefore, the solution is $x = -1$.
+  #qn The equation $x^2 + 2x + 1 = 0$ can be factored as $(x + 1)(x + 1) = 0$. Therefore, the solution is $x = -1$.
 
-  2. The equation $x^2 - 5x + 6 = 0$ can be factored as $(x - 2)(x - 3) = 0$. Therefore, the solutions are $x = 2$ and $x = 3$.
+  #qn The equation $x^2 - 5x + 6 = 0$ can be factored as $(x - 2)(x - 3) = 0$. Therefore, the solutions are $x = 2$ and $x = 3$.
 ]
 
 #solution(title: [Understanding the Pythagorean Theorem])[
