@@ -30,7 +30,18 @@ def main(args):
     package_version: str = args.version or package_info["package"]["version"]
     namespace: str = args.namespace
 
-    dest_path = package_dir / namespace / package_name / package_version
+    package_path = package_dir / namespace / package_name
+    if args.list:
+        if not package_path.exists():
+            return
+
+        versions = sorted(d.name for d in package_path.iterdir() if d.is_dir())
+        for v in versions:
+            print(v)
+
+        return
+
+    dest_path = package_path / package_version
     logging.info(f"Installing to {dest_path}")
 
     if dest_path.exists():
@@ -93,6 +104,9 @@ def parse_args():
     )
     parser.add_argument(
         "-f", "--force", action="store_true", help="Force overwrite if package exists"
+    )
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List installed versions"
     )
     return parser.parse_args()
 
