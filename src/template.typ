@@ -114,7 +114,7 @@
     show heading: set block(below: 1em)
     set heading(numbering: (..nums) => {
       numbering("1.1", ..nums)
-      [#h(0.8em, weak: true) <heading-numbering-space>]
+      [#h(0.5em, weak: true) <heading-numbering-space>]
     })
 
     it
