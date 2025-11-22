@@ -9,6 +9,8 @@
   course-name: "Course Name",
 )
 
+#show: util.use-three-line-table
+
 #problem(title: [A Simple Exercise])[
   This is a simple exercise to demonstrate the assignment template.
 
@@ -56,4 +58,15 @@
   #lorem(20)
 ][
   #lorem(100)
+
+  #figure(
+    caption: [A sample table demonstrating three-line style.],
+    table(
+      columns: 4,
+      table.header[header 1][header 2][header 3][header 4],
+      [cell 1], [cell 2], [cell 3], [cell 4],
+      [cell 5], [cell 6], [cell 7], [cell 8],
+      [cell 9], [cell 10], [cell 11], [cell 12],
+    ),
+  )
 ]

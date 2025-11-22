@@ -10,6 +10,8 @@
   mode: "report",
 )
 
+#show: util.use-three-line-table
+
 = Introduction
 This report provides an overview of the key concepts and findings related to the subject matter.
 
@@ -74,7 +76,9 @@ These limitations are acknowledged and discussed in the context of the findings.
 = Results
 The results section presents the findings of the research in a structured format.
 
-It includes tables, charts, and graphs to illustrate the data collected.
+It includes tables, charts, and graphs to illustrate the data collected, as shown in @fig:example-figure and @tab:example-table.
+
+The analysis revealed several key insights that are discussed in detail below.
 
 #figure(
   caption: [A sample figure.],
@@ -82,9 +86,19 @@ It includes tables, charts, and graphs to illustrate the data collected.
     #set align(center + horizon)
     XXX
   ],
-)
+) <fig:example-figure>
 
-The analysis revealed several key insights that are discussed in detail below.
+#figure(
+  caption: [A sample table.],
+  table(
+    columns: 5,
+    table.header[Task ID][Task Name][Responsible Person][Due Date][Current Progress],
+    [TASK-001], [Database Schema Design], [Alice], [2023-10-15], [100%],
+    [TASK-002], [Backend API Development], [Bob], [2023-10-20], [85%],
+    [TASK-003], [Frontend Interface Setup], [Charlie], [2023-10-25], [45%],
+    [TASK-004], [System Integration Testing], [David], [2023-11-01], [0%],
+  ),
+) <tab:example-table>
 
 #pagebreak()
 

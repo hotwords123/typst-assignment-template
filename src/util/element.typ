@@ -1,35 +1,39 @@
-// A table with three horizontal lines: at the top, between the header and body, and at the bottom.
+// Apply the three-line table style to a table.
 #let three-line-table(
-  // columns: (),
-  top-stroke: 1pt,
-  middle-stroke: .5pt,
-  bottom-stroke: 1pt,
-  header-rowspan: 1,
-  ..args,
-) = {
-  let cells = args.pos()
-  let attrs = args.named()
+  top-stroke: .08em,
+  middle-stroke: .05em,
+  bottom-stroke: .08em,
+  it,
+) = context {
+  if type(it) != content or it.func() != table {
+    panic("three-line-table() expects a table as input.")
+  }
 
-  // let num-columns = if cells.first().func() == table.header {
-  //   1
-  // } else if type(columns) == int {
-  //   calc.max(1, columns)
-  // } else if type(columns) == array {
-  //   calc.max(1, columns.len())
-  // } else {
-  //   1
-  // }
-
-  // let head = cells.slice(0, num-columns)
-  // let body = cells.slice(num-columns)
+  let (children, ..args) = it.fields()
+  let first-child = children.first(default: [])
+  if first-child.func() == table.hline {
+    // First child is already a horizontal line, do nothing
+    return it
+  } else if first-child.func() == table.header {
+    // Header row present, insert middle line after header
+    children.insert(1, table.hline(stroke: middle-stroke))
+  } else {
+    // No header row, insert middle line after first row
+    children.insert(0, table.hline(y: 1, stroke: middle-stroke))
+  }
 
   table(
-    stroke: none,
-    align: center + horizon,
-    ..attrs,
-    table.hline(y: 0, stroke: top-stroke),
-    table.hline(y: header-rowspan, stroke: middle-stroke),
-    ..cells,
+    ..args,
+    table.hline(stroke: top-stroke),
+    ..children,
     table.hline(stroke: bottom-stroke),
   )
+}
+
+// Show tables with three-line table style.
+#let use-three-line-table(it, ..args) = {
+  show table: set align(center)
+  set table(stroke: none, align: center + horizon)
+  show table: three-line-table.with(..args)
+  it
 }

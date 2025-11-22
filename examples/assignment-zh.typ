@@ -11,6 +11,7 @@
 )
 
 #show: el.default-enum-list
+#show: util.use-three-line-table
 
 #problem(title: [一个简单的练习])[
   这是一个简单的练习，用来演示作业模板。
@@ -59,4 +60,15 @@
   #lorem(20)
 ][
   #lorem(100)
+
+  #figure(
+    caption: [一个展示三线表格样式的示例表格],
+    table(
+      columns: 4,
+      table.header[标题 1][标题 2][标题 3][标题 4],
+      [内容 1], [内容 2], [内容 3], [内容 4],
+      [内容 5], [内容 6], [内容 7], [内容 8],
+      [内容 9], [内容 10], [内容 11], [内容 12],
+    ),
+  )
 ]

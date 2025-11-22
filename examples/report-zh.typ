@@ -12,6 +12,7 @@
 )
 
 #show: el.default-enum-list
+#show: util.use-three-line-table
 
 = 引言
 本报告概述了与主题相关的关键概念和研究发现。
@@ -78,17 +79,29 @@ $
 = 结果
 结果部分以结构化的形式呈现研究发现。
 
-它包含表格、图表和图形以说明收集到的数据。
+它包含表格、图表和图形以说明收集到的数据，如 @fig:example-figure 和 @tab:example-table 所示。
+
+分析得出若干关键见解，下面将详细讨论。
 
 #figure(
-  caption: [示例图。],
+  caption: [示例图片],
   rect(width: 240pt, height: 180pt)[
     #set align(center + horizon)
     XXX
   ],
-)
+) <fig:example-figure>
 
-分析得出若干关键见解，下面将详细讨论。
+#figure(
+  caption: [示例表格],
+  table(
+    columns: 5,
+    table.header[任务 ID][任务名称][负责人][截止日期][当前进度],
+    [TASK-001], [数据库架构设计], [张三], [2023-10-15], [100%],
+    [TASK-002], [后端 API 开发], [李四], [2023-10-20], [85%],
+    [TASK-003], [前端界面搭建], [王五], [2023-10-25], [45%],
+    [TASK-004], [系统集成测试], [赵六], [2023-11-01], [0%],
+  )
+) <tab:example-table>
 
 #pagebreak()
 
