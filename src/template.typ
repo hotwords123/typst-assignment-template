@@ -72,22 +72,21 @@
     header: _wrap-default(header, context {
       let (page-number,) = counter(page).get()
       if page-number > 1 {
-        set align(right)
         set text(size: 10pt)
+        set par(first-line-indent: 0em)
         show: strong
 
         // Remove extra space after heading numbering in header
         show <heading-numbering-space>: none
 
-        let first = _join-nonempty(sep: [: ], course-name, title)
-        let second = hydra(
+        hydra(
           // For some reason, `selectors.by-level(max: 2)` doesn't work properly here,
           // so we use a custom selector instead.
           selectors.custom(selector.or(heading.where(level: 1), heading.where(level: 2))),
           skip-starting: true,
         )
-
-        _join-nonempty(sep: [ | ], first, second)
+        h(1fr)
+        _join-nonempty(sep: [: ], course-name, title)
       }
     }),
     footer: _wrap-default(footer, context {
