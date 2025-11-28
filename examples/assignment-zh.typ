@@ -2,12 +2,11 @@
 #import util: cont-eq
 #import "@preview/itemize:0.2.0" as el
 
-#set text(lang: "zh")
-
 #show: assignment-class.with(
   title: [作业标题],
   author: "作者姓名",
   course-name: "课程名称",
+  lang: "zh",
 )
 
 #show: el.default-enum-list

@@ -1,13 +1,12 @@
 #import "/src/lib.typ": *
 #import util: cont, no-indent
 
-#set text(lang: "en")
-
 #show: assignment-class.with(
   title: [Report Title],
   author: "Author Name",
   course-name: "Course Name",
   mode: "report",
+  lang: "en",
 )
 
 #show: util.use-three-line-table

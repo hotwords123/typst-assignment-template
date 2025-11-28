@@ -1,12 +1,11 @@
 #import "/src/lib.typ": *
 #import util: cont-eq
 
-#set text(lang: "en")
-
 #show: assignment-class.with(
   title: [Homework Title],
   author: "Author Name",
   course-name: "Course Name",
+  lang: "en",
 )
 
 #show: util.use-three-line-table

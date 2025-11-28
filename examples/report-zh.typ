@@ -2,13 +2,12 @@
 #import util: cont, no-indent
 #import "@preview/itemize:0.2.0" as el
 
-#set text(lang: "zh")
-
 #show: assignment-class.with(
   title: [报告标题],
   author: "作者姓名",
   course-name: "课程名称",
   mode: "report",
+  lang: "zh",
 )
 
 #show: el.default-enum-list
@@ -110,3 +109,24 @@ $
 讨论部分解释结果并探讨其意义。
 
 #lorem(200)
+
+= CJK 排版
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    // 输出 "Hello, World!" 到控制台
+    cout << "Hello, World!" << endl;
+    return 0;
+}
+```
+
+这是“引号”。“我叫，‘阿毛！’没有应。”
+
+这是 'smartquote', "double" 和撇号 cha'DIch。
+
+#underline[中文 English 下划线，中文 English 下划线。]
+
+《活着》（作者：余华）是一部深刻描绘中国社会变迁的小说，讲述了主人公福贵一生的坎坷经历，反映了普通人在历史洪流中的挣扎与坚韧。

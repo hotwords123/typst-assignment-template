@@ -64,6 +64,7 @@
   mode: "assignment",
   header: auto,
   footer: auto,
+  lang: "en",
   body,
 ) = {
   set document(title: title, author: author)
@@ -96,7 +97,7 @@
       set align(center)
       set text(size: 10pt)
 
-      if text.lang == "zh" [
+      if lang == "zh" [
         第 #page-number 页，共 #total-pages 页
       ] else [
         Page #page-number of #total-pages
@@ -119,10 +120,10 @@
     it
   } else {
     // Headings
-    set heading(numbering: (..nums) => context {
+    set heading(numbering: (..nums) => {
       if nums.pos().len() == 1 {
         let index = numbering("1", ..nums)
-        if text.lang == "zh" [
+        if lang == "zh" [
           第 #index 题
         ] else [
           Problem #index
@@ -140,13 +141,33 @@
 
   let en-font = "New Computer Modern"
 
-  show: it => context if text.lang == "zh" {
+  show: it => if lang == "zh" {
+    set text(lang: "zh", region: "CN")
+
     // Font settings
-    set text(size: 11pt, font: (en-font, "FZShuSong-Z01S"))
-    show strong: set text(font: (en-font, "FZHei-B01S"))
-    show emph: set text(font: (en-font, "FZKai-Z03S"))
-    show heading: set text(font: (en-font, "FZXiaoBiaoSong-B05S"))
-    show std.title: set text(font: (en-font, "FZHei-B01S"))
+    let cjk-font-spec(cjk-font, en-font: en-font) = (
+      (name: en-font, covers: "latin-in-cjk"),
+      cjk-font,
+    )
+
+    // https://typst-doc-cn.github.io/guide/FAQ/install-fonts.html
+    set text(size: 11pt, font: cjk-font-spec("FZShuSong-Z01S"))
+    show strong: set text(font: cjk-font-spec("FZHei-B01S"))
+    show emph: set text(font: cjk-font-spec("FZKai-Z03S"))
+    show heading: set text(font: cjk-font-spec("FZXiaoBiaoSong-B05S"))
+    show std.title: set text(font: cjk-font-spec("FZHei-B01S"))
+
+    // https://typst-doc-cn.github.io/guide/FAQ/chinese-in-raw.html
+    show raw: set text(font: cjk-font-spec("Source Han Sans SC", en-font: "DejaVu Sans Mono"))
+
+    // https://typst-doc-cn.github.io/guide/FAQ/equation-chinese-font.html
+    show math.equation: set text(font: ("New Computer Modern Math", "FZShuSong-Z01S"))
+
+    // https://typst-doc-cn.github.io/guide/FAQ/smartquote-font.html
+    show smartquote: set text(font: en-font)
+
+    // https://typst-doc-cn.github.io/guide/FAQ/underline-misplace.html
+    set underline(offset: .1em, stroke: .05em, evade: false)
 
     // Paragraph and list indentation for Chinese documents
     set par(
@@ -160,6 +181,8 @@
 
     it
   } else {
+    set text(lang: "en")
+
     // Font settings
     set text(size: 11pt, font: en-font)
 
