@@ -1,7 +1,5 @@
 // Math utilities
 
-#let varnothing = math.diameter
-
 #let ee = $upright(e)$.body
 #let ii = $upright(i)$.body
 
@@ -11,8 +9,13 @@
 #let argmin = $op(arg min, limits: #true)$.body
 #let argmax = $op(arg max, limits: #true)$.body
 
-#let always-display-math = it => {
+#let always-display-math(it) = {
   show math.equation.where(block: false): math.display
+  it
+}
+
+#let use-varnothing(it) = {
+  show math.equation: set text(features: ("cv01",))
   it
 }
 
@@ -23,7 +26,7 @@
 
 #let given = $mid(|)$.body
 
-#let style-expected-value = it => {
+#let style-expected-value(it) = {
   show math.EE: math.op(math.EE)
   it
 }
