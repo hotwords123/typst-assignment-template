@@ -1,5 +1,5 @@
 #import "/src/lib.typ": *
-#import util: cont, no-indent
+#import util: cont, no-indent, cal
 
 #show: assignment-class.with(
   title: [Report Title],
@@ -106,3 +106,9 @@ The analysis revealed several key insights that are discussed in detail below.
 The discussion section interprets the results and explores their implications.
 
 #lorem(200)
+
+Mathematical script letters:
+#let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+- $#math.cal(alphabet)$
+- $cal(alphabet)$
+- $scr(alphabet)$

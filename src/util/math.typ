@@ -9,6 +9,12 @@
 #let argmin = $op(arg min, limits: #true)$.body
 #let argmax = $op(arg max, limits: #true)$.body
 
+// https://typst-doc-cn.github.io/guide/FAQ/mathcal_font.html
+#let cal(it) = text(
+  font: ("Computer Modern Symbol", "New Computer Modern Math"),
+  math.scr(it),
+)
+
 // https://typst-doc-cn.github.io/guide/FAQ/math-inline-display.html
 #let always-display-math(it) = {
   show math.equation.where(block: false): math.display

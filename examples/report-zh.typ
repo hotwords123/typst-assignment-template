@@ -1,5 +1,5 @@
 #import "/src/lib.typ": *
-#import util: cont, no-indent
+#import util: cont, no-indent, cal
 #import "@preview/itemize:0.2.0" as el
 
 #show: assignment-class.with(
@@ -109,6 +109,12 @@ $
 讨论部分解释结果并探讨其意义。
 
 #lorem(200)
+
+数学公式花体字母：
+#let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+- $#math.cal(alphabet)$
+- $cal(alphabet)$
+- $scr(alphabet)$
 
 = CJK 排版
 
