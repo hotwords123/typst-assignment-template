@@ -2,6 +2,8 @@
 
 #let ee = $upright(e)$.body
 #let ii = $upright(i)$.body
+#let jj = $upright(j)$.body
+#let kk = $upright(k)$.body
 
 #let pm = $plus.minus$.body
 #let mp = $minus.plus$.body
