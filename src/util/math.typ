@@ -11,6 +11,15 @@
 #let argmin = $op(arg min, limits: #true)$.body
 #let argmax = $op(arg max, limits: #true)$.body
 
+#let chev(..args) = {
+  let body = args.pos().join($,$.body)
+  $lr(chevron.l body chevron.r)$.body
+}
+
+#let cdots = $class("binary", dots.h.c)$.body
+
+#let ns = h(-1em / 6)  // negative thin space
+
 // https://typst-doc-cn.github.io/guide/FAQ/mathcal_font.html
 #let cal(it) = text(
   font: ("Computer Modern Symbol", "New Computer Modern Math"),
