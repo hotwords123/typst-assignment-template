@@ -1,5 +1,33 @@
 // Math utilities
 
+#let _used-math-responsive = state("_used-math-responsive", false)
+#let math-responsive(cb) = {
+  context assert(
+    _used-math-responsive.get(),
+    message: "math-responsive can only be used after use-math-responsive",
+  )
+  [#metadata(cb) <math-responsive>]
+}
+#let use-math-responsive(it) = {
+  show math.equation: eq => {
+    show <math-responsive>: m => (m.value)(eq.block)
+    eq
+  }
+  _used-math-responsive.update(value => {
+    assert(not value, message: "use-math-responsive can only be used once")
+    true
+  })
+  it
+}
+#let display(..args) = {
+  show <math-responsive>: m => (m.value)(true)
+  math.display(..args)
+}
+#let inline(..args) = {
+  show <math-responsive>: m => (m.value)(false)
+  math.inline(..args)
+}
+
 #let ee = $upright(e)$.body
 #let ii = $upright(i)$.body
 #let jj = $upright(j)$.body
@@ -19,6 +47,17 @@
 #let cdots = $class("binary", dots.h.c)$.body
 
 #let ns = h(-1em / 6)  // negative thin space
+
+#let qed = h(1fr) + sym.square
+
+#let pmod(divisor, space: auto) = {
+  if space == auto {
+    math-responsive(block => if block { math.quad } else { math.thick })
+  } else {
+    space
+  }
+  $(op("mod") med #divisor)$.body
+}
 
 // https://typst-doc-cn.github.io/guide/FAQ/mathcal_font.html
 #let cal(it) = text(
